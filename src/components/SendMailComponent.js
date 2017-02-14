@@ -35,15 +35,6 @@ export default class SendMailComponent extends Component {
         placeholder="Enter subject"
         value={this.state.subjectMail}
         onChange={this.handleChange.bind(this, 'subjectMail')} />
-		
-	<label>Email Text : </label>
-      <input
-        type="text"
-        className={classnames('form-control', styles.emailInput)}
-        placeholder="Enter text to mail"
-        value={this.state.emailBody}
-        onChange={this.handleChange.bind(this, 'emailBody')} />
-    
 	
 		<button className="btn-primary" onClick={this.handleSubmit.bind(this)}>Send</button>
 		
@@ -67,14 +58,13 @@ export default class SendMailComponent extends Component {
   
   handleSubmit (e) {
     const name = e.target.value.trim();
-    //if (e.which === 13) {
 	    fetch('http://localhost:1337/emailInfo', {
       method: 'post',
       headers: {
          'Accept': 'application/json',
          'Content-Type': 'application/json'
         },
-      body:JSON.stringify({email:this.state.name, senderEmail:this.state.senderEmail, subjectMail:this.state.subjectMail, emailBody:this.state.emailBody}),
+      body:JSON.stringify({email:this.state.name, senderEmail:this.state.senderEmail, subjectMail:this.state.subjectMail}),
     })
     .then(response => {
       if (response.status >= 200 && response.status < 300) {
@@ -84,6 +74,6 @@ export default class SendMailComponent extends Component {
       }
     })
     .catch(error => { console.log('request failed', error); });
-      this.setState({ name: '', senderEmail:'', subjectMail:'', emailBody:''});
+      this.setState({ name: '', senderEmail:'', subjectMail:''});
     }
 }
